@@ -1,3 +1,8 @@
+#env files
+.env
+.cfg
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
