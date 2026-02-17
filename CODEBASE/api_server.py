@@ -9,19 +9,7 @@ import re
 from fastapi import FastAPI, HTTPException
 import uvicorn
 import nest_asyncio
-
-#define the credentials
-user = 'root'
-password = 'DataengineerJAM0112'
-host = '127.0.0.1'
-port = 3306
-database = 'kjcs_etl_database'
-
-# Create SQLAlchemy engine
-engine = create_engine(
-    f'mysql+pymysql://{user}:{password}@{host}:{port}/{database}',
-    future=True
-)
+from db_engine import my_engine
 
 #API server
 
@@ -37,7 +25,7 @@ def get_cars(limit: int = 10):
     #query 
     query = text(f'SELECT * FROM kjcs_project_7_tab LIMIT {limit}')
     #connect to database and pull out data
-    with engine.connect() as conn:
+    with my_engine.connect() as conn:
         df = pd.read_sql(query, conn)
         #convert Row objects → dict
     return df.to_dict(orient='records')
